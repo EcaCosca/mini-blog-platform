@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchPosts, createPost, updatePost } from "../services/api";
+import { fetchPosts, createPost } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import PostModal from "../components/PostModal";
 import { useState } from "react";
 
 const Home = () => {
-  const { accessToken, user } = useAuth();
+  const { user } = useAuth();
   const {
     data: posts,
     status,
     error,
   } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => fetchPosts(accessToken),
+    queryFn: () => fetchPosts(),
   });
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -62,7 +62,7 @@ const Home = () => {
 
       {/* Responsive grid layout for posts */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {posts?.map((post) => (
+        {posts?.map((post: { id: string; title: string; content: string; }) => (
           <div
             key={post.id}
             className="relative group overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105"

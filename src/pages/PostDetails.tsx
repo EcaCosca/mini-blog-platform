@@ -8,8 +8,7 @@ import {
   updateComment,
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
-import { z } from "zod";
+import { JSXElementConstructor, Key, ReactElement, ReactNode, useState } from "react";
 import Spinner from "../components/Spinner";
 
 const PostDetail = () => {
@@ -24,7 +23,6 @@ const PostDetail = () => {
   const {
     data: post,
     status: postStatus,
-    error: postError,
   } = useQuery({
     queryKey: ["post", id],
     queryFn: () => fetchPostById(id as string),
@@ -171,7 +169,7 @@ const PostDetail = () => {
           <p>Error loading comments: {JSON.stringify(commentsError)}</p>
         ) : (
           <div className="space-y-4">
-            {comments?.map((comment) => (
+            {comments?.map((comment: { id: Key; content: string; email: string | undefined; created_at: string | number | Date; }) => (
               <div
                 key={comment.id}
                 className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow relative"
