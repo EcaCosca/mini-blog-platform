@@ -1,51 +1,97 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Mini Blog Platform
 
-Currently, two official plugins are available:
+A simple blog platform built with CRUD operations for posts and comments. This platform includes user authentication, responsive design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Frontend
 
-- Configure the top-level `parserOptions` property like this:
+- React (with Vite)
+- TypeScript
+- TanStack Query (React Query) for data fetching and caching
+- Tailwind CSS for styling
+- React Router for navigation
+- Zod for form validation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Backend
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Node.js
+- Express.js
+- Supabase (PostgreSQL) - Used for database management and authentication
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Features
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# mini-blog-platform
+### User Authentication
+
+- User login and registration with Supabase Auth.
+- Conditional rendering and access based on authentication.
+
+### Blog Posts
+
+- CRUD Operations for posts (Create, Read, Update, Delete).
+- Pagination on the list view.
+- Single Post View to see details and comments.
+
+### Comments
+
+- CRUD Operations for comments.
+- Display comments under each post.
+- Users can edit or delete their own comments.
+
+### Responsive Design
+
+- Responsive and mobile-friendly layouts.
+
+### Form Validation
+
+- Zod for validating form inputs in the frontend.
+
+### Dark Mode
+
+- Dark and light themes with a toggle switch.
+
+## Requirements
+
+### Frontend
+
+- React with Vite for project setup.
+- TypeScript for type safety.
+- TanStack Query for data fetching and caching.
+- Responsive design with Tailwind CSS.
+- Form validation using Zod.
+
+### Backend
+
+- Node.js with Express.js server.
+- Supabase (PostgreSQL) for database management.
+- RESTful API endpoints for posts and comments.
+- Zod for request validation on backend.
+
+
+## Usage
+
+1. **Login/Register:** Visit `/auth` to log in or register.
+2. **Create a Post:** Once logged in, click “Create New Post” on the homepage.
+3. **Edit/Delete Post:** On each post, there’s an option to edit or delete the post.
+4. **Comment:** On a post’s details page, add comments. You can edit or delete your own comments.
+
+## API Endpoints
+
+| Method | Endpoint                          | Description                  |
+|--------|-----------------------------------|------------------------------|
+| POST   | /api/posts                        | Create a new post            |
+| GET    | /api/posts                        | Fetch all posts              |
+| GET    | /api/posts/:id                    | Fetch a single post          |
+| PUT    | /api/posts/:id                    | Update a post                |
+| DELETE | /api/posts/:id                    | Delete a post                |
+| POST   | /api/posts/:id/comments           | Create a comment for a post  |
+| GET    | /api/posts/:id/comments           | Fetch comments for a post    |
+| PUT    | /api/posts/:id/comments/:id       | Update a comment             |
+| DELETE | /api/posts/:id/comments/:id       | Delete a comment             |
+
+## Notes
+
+
+
