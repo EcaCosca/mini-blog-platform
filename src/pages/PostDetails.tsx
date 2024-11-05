@@ -8,7 +8,7 @@ import {
   updateComment,
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
-import { JSXElementConstructor, Key, ReactElement, ReactNode, useState } from "react";
+import { useState } from "react";
 import Spinner from "../components/Spinner";
 
 const PostDetail = () => {
@@ -47,7 +47,7 @@ const PostDetail = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["comments", id]);
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
       setCommentText("");
     },
   });
@@ -61,7 +61,7 @@ const PostDetail = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["comments", id]);
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
     },
   });
 
@@ -80,7 +80,7 @@ const PostDetail = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["comments", id]);
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
       setEditingCommentId(null);
       setEditText("");
     },
@@ -169,7 +169,7 @@ const PostDetail = () => {
           <p>Error loading comments: {JSON.stringify(commentsError)}</p>
         ) : (
           <div className="space-y-4">
-            {comments?.map((comment: { id: Key; content: string; email: string | undefined; created_at: string | number | Date; }) => (
+            {comments?.map((comment: { id: string; content: string; email: string | undefined; created_at: string | number | Date; }) => (
               <div
                 key={comment.id}
                 className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow relative"
@@ -179,6 +179,7 @@ const PostDetail = () => {
                     <textarea
                       value={editText}
                       onChange={(e) => setEditText(e.target.value)}
+                      placeholder="Edit your comment..."
                       className="w-full p-2 mb-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:text-white"
                       rows={3}
                     ></textarea>

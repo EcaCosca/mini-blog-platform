@@ -24,22 +24,33 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
     error,
   } = useQuery<Comment[]>({
     queryKey: ["comments", postId],
-    queryFn: () => fetchCommentsByPostId(postId, accessToken),
+    queryFn: () => fetchCommentsByPostId(postId),
     enabled: !!postId && !!accessToken,
   });
 
-  const { mutate: addComment, isLoading: isCommentSubmitting } = useMutation(
-    (newComment: string) => createComment(postId, newComment, accessToken),
-    {
+  const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
+
+  const { mutate: addComment } = useMutation({
+      mutationFn: async (newComment: string) => {
+        if (postId && accessToken) {
+          await createComment(postId, newComment, accessToken);
+        } else {
+          throw new Error("Post ID or access token missing");
+        }
+      },
       onSuccess: () => {
         setComment("");
-        queryClient.invalidateQueries(["comments", postId]);
+        queryClient.invalidateQueries({ queryKey: ["comments", postId] });
       },
-    }
-  );
+    });
 
   const handleCommentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+      setIsCommentSubmitting(true);
+      addComment(comment, {
+        onSettled: () => {
+          setIsCommentSubmitting(false);
+        },
+      });
     if (comment.trim()) {
       addComment(comment);
     }

@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Auth = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const navigate = useNavigate();
   const {login} = useAuth();
   const notify = (msg: string) => toast(msg);
