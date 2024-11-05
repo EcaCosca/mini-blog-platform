@@ -44,7 +44,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       },
     });
 
-  const handleCommentSubmit = (e: React.FormEvent) => {
+  const handleCommentSubmit = () => {
       setIsCommentSubmitting(true);
       addComment(comment, {
         onSettled: () => {
